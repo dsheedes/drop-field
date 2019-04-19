@@ -1,0 +1,62 @@
+html, body {
+    height:100%;
+    margin:0;
+
+}
+#drop_field {
+    border: 2px dashed #6c757d;
+    width:  100%;
+    height: 50%;
+    padding:20px;
+    text-align:center;
+    background-color:#f8f9fa;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+#drop_field , p{
+    color:#929487;
+    font-family: 'Arial';
+    font-size: 16px;
+}
+#subtitle_text{
+    font-size:12px;
+}
+
+#drop_field, ul{
+    font-size:16px;
+    text-transform: none;
+    font-family:arial;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+#drop_field > ul > li{
+    display:inline;
+}
+
+#info_text{
+    font-weight:bold;
+}
+main{
+    width:50%;
+    padding:20px;
+}
+
+main > p {
+    color:#000;
+}
+
+.cloudy{
+    color:grey;
+}

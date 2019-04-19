@@ -1,0 +1,98 @@
+<!--
+    Drop Field example.
+----------------------------------------
+    Some guidelines before starting:
+
+    Hook to an element you wish to turn into a drop field.
+
+    $("#element").dropField();
+
+    .dropField() can accept multiple options, check it out: 
+
+    function onDrop(file, error){
+        - When a user drops a file this function will execute.
+        - .dropField() automatically passes the file(s) to this function.
+        - If file is undefined .dropField() sends an error object with a status code and an info message.
+
+        Error object looks like this:
+
+        error = {
+            "status":10,
+            "info":"too big"
+        }
+
+        Status codes:
+            10 - File too big
+            11 - File not supported / wrong extension
+            12 - More than one file
+            13 - Too many files
+
+    }
+
+    function onDragover(){
+        - When a user brings a file over the field this function will execute
+    }
+
+    function onLeave(){
+        - When a user leaves the field while dragging this function will execute
+    }
+
+    var options = {
+        "multipleFiles":"true/false", - Default is true
+        "fileLimit":"number" - Default is none
+        "allowedExtensions":["jpg", "jpeg", "png", "tiff"...], - Default is all
+        "fileSize":5000000 -Value defined in bytes
+    }
+
+    $("#element").dropField(onDrop(file), onDragover(), onLeave(), options);
+
+    ***DISCLAIMER***
+        ALWAYS VERIFY THE FILES ON THE SERVER SIDE.
+        dropField.js SHOULD NOT BE USED AS A SECURITY MEASURE, BUT AS A WEBSITE FEATURE
+        
+        dropField.js DEVELOPERS ARE NOT RESPONSIBLE FOR ANYTHING THAT MAY HAPPEN ON YOUR WEBSITE
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>dropField Example</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+            <div id="drop_field">
+                    <p id="info_text">Drop file(s) here to upload!<br/></p>
+                    <p id="subtitle_text">Files with <strong>.jpg</strong>, <strong>.jpeg</strong>, and <strong>.png</strong> extensions are allowed!<br/>Maximum file size of <strong>50MB</strong></p>
+                    <ul id="file_list"></ul>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+            <script src="dropField.js"></script> <!--Including the script-->
+            <script>
+                var options = {
+                    fileSize:50000000,
+                    multipleFiles:false,
+                    fileLimit:2,
+                    allowedExtensions:["jpg", "jpeg", "png"],
+                }
+                $("#drop_field").dropField(function (file, error){
+                    $("#drop_field").css({ //On drop
+                        "border-style":"dashed",
+                        "background-color":"#f8f9fa"
+                    })
+                    if(file !== undefined){
+                        alert("You've tried to upload this file: "+file.name);
+                    } else alert(error.info);
+
+                }, function(){
+                    $("#drop_field").css({ //On dragover
+                        "border-style":"solid",
+                        "background-color":"#fff"
+                    });
+                }, function(){
+                    $("#drop_field").css({ //On leave
+                        "border-style":"dashed",
+                        "background-color":"#f8f9fa"
+                    });
+                }, options);
+            </script>
+    </body>
+</html>
