@@ -76,13 +76,31 @@
                         }
                     }
             } else {
-                var file = ev.dataTransfer.items[0].getAsFile();
-                if(file.size <= options.fileSize && options.fileSize > 0){
-                    onDrop(file);//Send only one
-                } else {
-                    console.log(file.name);
-                    var e = {"status":10,"info":file.name+" is too big! "+file.size+"/"+options.fileSize+" bytes"};
-                    onDrop(undefined, e);
+                for(var i = 0; i <= ev.dataTransfer.items.length; i++){
+                    var file = ev.dataTransfer.items[i].getAsFile();
+                    if(file.size <= options.fileSize && options.fileSize > 0){
+                        if(ext !== undefined){
+                            var extTest = file.type.split("/");
+                            var match = 0;
+                            for(var p = 0; p <= ext.length - 1; p++){
+                                if(ext[p] == extTest[1]){
+                                    match = 1;
+                                    break;
+                                }
+                            }
+                            if(match == 0){
+                                onDrop(undefined, {"status":11,"info":"This file type is not supported."+"'"+extTest[1]+"'"});
+                                break;
+                            } 
+                        }else {
+                                onDrop(file);
+                                break;
+                            }
+                    } else {
+                        var e = {"status":10,"info":file.name+" is too big! "+file.size+"/"+options.fileSize+" bytes"};
+                        onDrop(undefined, e);
+                        break;
+                    }
                 }
             }
         } else {
@@ -94,7 +112,8 @@
                     limit = ev.dataTransfer.files.length;
                 }
                 for (var i = 0; i < limit; i++) {
-                    var file = ev.dataTransfer.files[i].getAsFile();
+                    for(var i = 0; i <= ev.dataTransfer.items.length; i++){
+                        var file = ev.dataTransfer.items[i].getAsFile();
                         if(file.size <= options.fileSize && options.fileSize > 0){
                             if(ext !== undefined){
                                 var extTest = file.type.split("/");
@@ -105,20 +124,25 @@
                                         break;
                                     }
                                 }
-
                                 if(match == 0){
                                     onDrop(undefined, {"status":11,"info":"This file type is not supported."+"'"+extTest[1]+"'"});
-                                } else onDrop(file);
-                            } else onDrop(file);
-
+                                    break;
+                                } 
+                            }else {
+                                    onDrop(file);
+                                    break;
+                                }
                         } else {
                             var e = {"status":10,"info":file.name+" is too big! "+file.size+"/"+options.fileSize+" bytes"};
                             onDrop(undefined, e);
+                            break;
                         }
+                    }
                     }
             } else {
                 var file = ev.dataTransfer.files[0].getAsFile();
                 if(file.size <= options.fileSize && options.fileSize > 0){
+                    
                     onDrop(file); //Send only one
                 } else {
                     var e = {"status":10,"info":file.name+" is too big! "+file.size+"/"+options.fileSize+" bytes"};

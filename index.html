@@ -62,14 +62,15 @@
             <div id="drop_field">
                     <p id="info_text">Drop file(s) here to upload!<br/></p>
                     <p id="subtitle_text">Files with <strong>.jpg</strong>, <strong>.jpeg</strong>, and <strong>.png</strong> extensions are allowed!<br/>Maximum file size of <strong>50MB</strong></p>
-                    <ul id="file_list"></ul>
+            </div>
+            <div id="result_field">
             </div>
             <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
             <script src="dropField.js"></script> <!--Including the script-->
             <script>
                 var options = {
                     fileSize:50000000,
-                    multipleFiles:false,
+                    multipleFiles:true,
                     fileLimit:2,
                     allowedExtensions:["jpg", "jpeg", "png"],
                 }
@@ -79,7 +80,13 @@
                         "background-color":"#f8f9fa"
                     })
                     if(file !== undefined){
-                        alert("You've tried to upload this file: "+file.name);
+                       // alert("You've tried to upload this file: "+file.name);
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                console.log("initiated");
+                                $("#result_field").append("<img src='"+e.target.result+"' class='result'>");
+                            };
+                            reader.readAsDataURL(file);
                     } else alert(error.info);
 
                 }, function(){

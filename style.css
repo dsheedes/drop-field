@@ -60,3 +60,12 @@ main > p {
 .cloudy{
     color:grey;
 }
+#result_field{
+    width:100%;
+    height:50%;
+}
+.result{
+    height:90%;
+    padding:10px;
+    width:auto;
+}
